@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Event 2026 — Flops ?!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f2f2f0; --card: #ffffff; --border: #e0ddd8;
+      --gold: #c9a84c; --gold-light: #f0e4c2; --gold-dark: #a07830;
+      --gray-light: #e8e8e8; --text: #1a1a1a; --muted: #777; --radius: 18px;
+    }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(242,242,240,.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border); padding: 0 40px; height: 64px;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.1rem; color: var(--text); text-decoration: none; letter-spacing: -.02em; }
+    .nav-logo span { color: var(--gold); }
+    .nav-logo small { font-size:.65rem; font-weight:500; color:var(--muted); display:block; line-height:1.2; }
+    .nav-links { display: flex; gap: 8px; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--muted); font-size: .85rem; font-weight: 500; padding: 6px 14px; border-radius: 8px; transition: background .15s, color .15s; }
+    .nav-links a:hover, .nav-links a.active { background: var(--gold-light); color: var(--gold-dark); }
+    .qbg { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+    .qbg span { position: absolute; font-weight: 800; opacity: .15; color: #9e9e9e; user-select: none; }
+    .qbg span.g { color: var(--gold); opacity: .22; }
+    .hero { position: relative; padding: 90px 24px 70px; text-align: center; overflow: hidden; }
+    .hero-tag { display: inline-block; background: var(--gold-light); border: 1px solid rgba(201,168,76,.35); color: var(--gold-dark); font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; padding: 6px 18px; border-radius: 999px; margin-bottom: 28px; position: relative; z-index:1; }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 8vw, 6.5rem); font-weight: 900; line-height: 1; letter-spacing: -.02em; margin-bottom: 24px; position: relative; z-index: 1; }
+    .hero h1 span { color: var(--gold); }
+    .hero-sub { font-size: 1.05rem; color: var(--muted); max-width: 620px; margin: 0 auto 16px; line-height: 1.75; font-style: italic; position: relative; z-index: 1; }
+    .hero-meta { font-size: .8rem; font-weight: 600; color: var(--gold-dark); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 40px; position: relative; z-index: 1; }
+    .hero-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; position: relative; z-index: 1; }
+    .chip { background: var(--card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 20px; font-size: .82rem; font-weight: 600; color: var(--text); box-shadow: 0 2px 8px rgba(0,0,0,.05); }
+    .divider { width: 100%; height: 1px; background: var(--border); }
+    .stats-bar { background: var(--card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); display: flex; flex-wrap: wrap; }
+    .stat-item { flex: 1; min-width: 150px; padding: 28px 20px; text-align: center; border-right: 1px solid var(--border); }
+    .stat-item:last-child { border-right: none; }
+    .stat-val { font-family:'Playfair Display',serif; font-size:2.2rem; font-weight:900; color:var(--gold); }
+    .stat-lbl { font-size:.72rem; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.1em; margin-top:4px; }
+    .section { padding: 72px 24px; max-width: 1100px; margin: 0 auto; }
+    .section-label { font-size: .72rem; font-weight: 700; color: var(--muted); letter-spacing: .15em; text-transform: uppercase; margin-bottom: 40px; display: flex; align-items: center; gap: 12px; }
+    .section-label::after { content: ''; flex:1; height:1px; background:var(--border); }
+    .section-h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 800; line-height: 1.15; margin-bottom: 20px; }
+    .section-h2 span { color: var(--gold); }
+    .quote-block { background: var(--card); border-left: 4px solid var(--gold); border-radius: 0 var(--radius) var(--radius) 0; padding: 36px 44px; box-shadow: 0 4px 24px rgba(0,0,0,.06); position: relative; overflow: hidden; }
+    .quote-block::before { content: '"'; position: absolute; top: -10px; left: 16px; font-family: 'Playfair Display', serif; font-size: 8rem; color: var(--gold-light); line-height: 1; pointer-events: none; }
+    .quote-block p { font-size: 1rem; color: #444; line-height: 1.85; font-style: italic; position: relative; z-index: 1; }
+    .quote-source { margin-top: 16px; font-size: .78rem; font-weight: 600; color: var(--gold-dark); letter-spacing: .06em; text-transform: uppercase; }
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
+    .expo-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,.05); transition: transform .2s, border-color .2s, box-shadow .2s; display: flex; flex-direction: column; }
+    .expo-card:hover { transform: translateY(-5px); border-color: var(--gold); box-shadow: 0 12px 36px rgba(201,168,76,.13); }
+    .card-img-wrap { width: 100%; height: 220px; overflow: hidden; background: var(--gray-light); display: flex; align-items: center; justify-content: center; position: relative; }
+    .card-img-wrap img { width:100%; height:100%; object-fit:cover; display:block; }
+    .card-img-placeholder { display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--muted); font-size: .85rem; }
+    .card-img-placeholder span { font-size: 2.5rem; }
+    .card-badge { position: absolute; top: 12px; left: 12px; background: var(--gold); color: #fff; font-size: .68rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; letter-spacing: .06em; text-transform: uppercase; }
+    .card-body { padding: 24px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+    .card-category { font-size: .68rem; font-weight: 700; color: var(--gold-dark); letter-spacing: .1em; text-transform: uppercase; }
+    .card-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--text); line-height: 1.3; }
+    .card-desc { font-size: .88rem; color: var(--muted); line-height: 1.7; flex: 1; }
+    .card-footer { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 8px; font-size: .75rem; color: var(--muted); font-weight: 500; }
+    .highlight-text h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 800; margin-bottom: 16px; }
+    .highlight-text p { font-size: .95rem; color: var(--muted); line-height: 1.8; margin-bottom: 14px; }
+    .tag-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .tag { font-size:.72rem; font-weight:600; padding:4px 12px; border-radius:6px; background:var(--gray-light); color:#555; border:1px solid var(--border); }
+    footer { background: var(--card); border-top: 1px solid var(--border); padding: 40px 24px; text-align: center; }
+    .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 900; color: var(--text); margin-bottom: 8px; }
+    .footer-logo span { color: var(--gold); }
+    footer p { font-size: .8rem; color: var(--muted); margin-top: 6px; }
+    footer a { color: var(--gold-dark); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+    <div><div>Flop<span>?</span> or not</div><small>Musée des Arts et Métiers · Le Cnam</small></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="event.html" class="active">Event 2026</a></li>
+    <li><a href="equipe_en.html">Our Team</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="qbg" aria-hidden="true">
+    <span style="top:5%;left:3%;font-size:1.5rem;">?</span>
+    <span class="g" style="top:8%;left:14%;font-size:2.5rem;">?</span>
+    <span style="top:4%;left:35%;font-size:1.2rem;">?</span>
+    <span style="top:6%;left:57%;font-size:1.8rem;">?</span>
+    <span class="g" style="top:12%;left:74%;font-size:2rem;">?</span>
+    <span style="top:3%;left:89%;font-size:1rem;">?</span>
+    <span style="top:55%;left:1%;font-size:2rem;">?</span>
+    <span class="g" style="top:60%;left:94%;font-size:1.5rem;">?</span>
+    <span style="top:80%;left:8%;font-size:1.2rem;">?</span>
+    <span class="g" style="top:85%;left:85%;font-size:1.4rem;">?</span>
+  </div>
+  <div class="hero-tag">📅 Visit · Musée des Arts et Métiers · 2026</div>
+  <h1>Flops<span> ?!</span></h1>
+  <p class="hero-sub">"Drawing on several case studies, the Flops ?! exhibition explores the causes of failure across different technical sectors."</p>
+  <p class="hero-meta">Musée des Arts et Métiers · Le Cnam · Paris 3rd</p>
+  <div class="hero-chips">
+    <span class="chip">🚀 Transport</span>
+    <span class="chip">📡 Telecommunications</span>
+    <span class="chip">⚙️ Mechanics</span>
+    <span class="chip">🎲 Games & Toys</span>
+    <span class="chip">🧠 Psychological biases</span>
+  </div>
+</section>
+
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-val">+40</div><div class="stat-lbl">Objects on display</div></div>
+  <div class="stat-item"><div class="stat-val">5</div><div class="stat-lbl">Thematic sectors</div></div>
+  <div class="stat-item"><div class="stat-val">1794</div><div class="stat-lbl">Museum founded</div></div>
+  <div class="stat-item"><div class="stat-val">∞</div><div class="stat-lbl">Lessons to learn</div></div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section">
+  <div class="section-label">About the exhibition</div>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start;">
+    <div>
+      <h2 class="section-h2">The exhibition<br/><span>Flops ?!</span></h2>
+      <p style="color:var(--muted); line-height:1.8; margin-bottom:16px; font-size:.95rem;">
+        During our visit to the Musée des Arts et Métiers, we discovered various objects that had failed. This exhibition allowed us to look at failure differently — no longer as an end, but as a necessary step in the invention process.
+      </p>
+      <p style="color:var(--muted); line-height:1.8; font-size:.95rem;">
+        The exhibition questions the engineer, the designer, the salesperson, the advertiser and even the user to dissect the mechanisms of failure and better understand what went wrong.
+      </p>
+    </div>
+    <div class="quote-block">
+      <p>"Drawing on several case studies, the Flops ?! exhibition explores the causes of failure across different technical sectors (transport, telecommunications, mechanics…) or sometimes less technical ones (games and toys, graphic communication, psychological bias…)."
+      <br/><br/>
+      "And because some flops ultimately turn out to be tops, the exhibition explores unexpected success stories: a good idea that was ahead of its time, an immature technology, or an object whose use was repurposed."</p>
+      <div class="quote-source">— Musée des Arts et Métiers</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section">
+  <div class="section-label">A glimpse...</div>
+  <h2 class="section-h2" style="margin-bottom:40px;">The objects that <span>stood out</span></h2>
+  <div class="cards-grid">
+    <div class="expo-card">
+      <div class="card-img-wrap">
+        <img src="image_c0e4d1.png" alt="Vasa Model 1628" onerror="this.parentElement.innerHTML='<div class=\'card-img-placeholder\'><span>⛵</span><span>Vasa Model</span></div>'"/>
+        <span class="card-badge">🚢 Transport</span>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Naval architecture · 1628</div>
+        <div class="card-title">The Vasa Model</div>
+        <p class="card-desc">Built to be the most impressive warship of its era, the Vasa sank less than an hour after setting sail due to a stability issue. A design flaw that perfectly illustrates how ambition without method leads to failure.</p>
+        <div class="card-footer">📍 Stockholm · Sweden</div>
+      </div>
+    </div>
+    <div class="expo-card">
+      <div class="card-img-wrap">
+        <img src="image_c0e50a.png" alt="Mars Climate Orbiter" onerror="this.parentElement.innerHTML='<div class=\'card-img-placeholder\'><span>🚀</span><span>Mars Climate Orbiter</span></div>'"/>
+        <span class="card-badge">🚀 Space</span>
+      </div>
+      <div class="card-body">
+        <div class="card-category">NASA · 1999</div>
+        <div class="card-title">Mars Climate Orbiter</div>
+        <p class="card-desc">A $327 million space mission ruined by a simple unit conversion error. One team used miles, the other kilometres. The probe burned up in the Martian atmosphere. Miles vs kilometres: 1 – 0.</p>
+        <div class="card-footer">🌍 NASA · Mars Mission</div>
+      </div>
+    </div>
+    <div class="expo-card">
+      <div class="card-img-wrap">
+        <img src="image_c0e46e.png" alt="Trump Board Game" onerror="this.parentElement.innerHTML='<div class=\'card-img-placeholder\'><span>🎲</span><span>Trump Game</span></div>'"/>
+        <span class="card-badge">🎲 Games</span>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Games & communication · 1989</div>
+        <div class="card-title">"Trump: The Game"</div>
+        <p class="card-desc">Launched in 1989, this board game bearing Donald Trump's image was meant to capitalise on his fame. Despite a large marketing budget, sales were catastrophic. Too complex, too personality-focused: a memorable commercial flop.</p>
+        <div class="card-footer">🇺🇸 Milton Bradley · United States</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section">
+  <div class="section-label">What we take away</div>
+  <div class="highlight-text">
+    <h3>Failure,<br/>the engine of innovation</h3>
+    <p>What the "Flops ?!" exhibition taught us is that behind every great success lies a series of failures. The Vasa, the Mars Climate Orbiter, or even the Minitel: objects that failed their original purpose, but taught us something essential.</p>
+    <p>The exhibition challenges our relationship with failure and invites us to see it no longer as a shame, but as a step in the creative process — a vision particularly relevant in our computer science studies.</p>
+    <div class="tag-list">
+      <span class="tag">Innovation</span>
+      <span class="tag">Constructive failure</span>
+      <span class="tag">Creative process</span>
+      <span class="tag">Design thinking</span>
+      <span class="tag">Resilience</span>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<footer>
+  <div class="footer-logo">Flop<span> or not?</span></div>
+  <p>Exhibition at the Musée des Arts et Métiers · Le Cnam</p>
+  <p style="margin-top:16px;">
+    <a href="index.html">Home</a> &nbsp;·&nbsp;
+    <a href="event.html">Event 2026</a> &nbsp;·&nbsp;
+    <a href="equipe_en.html">Our Team</a>
+  </p>
+  <p style="margin-top:16px; font-size:.75rem;">© 2026 — SAÉ S2.06 · Computer Science · Université Sorbonne Paris Nord</p>
+</footer>
+
+</body>
+</html>
